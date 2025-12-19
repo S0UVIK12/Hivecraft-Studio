@@ -10,30 +10,23 @@ document.addEventListener('DOMContentLoaded', function(){
       toggle.setAttribute('aria-expanded', 'false');
       toggle.setAttribute('aria-label', 'Open menu');
       document.body.classList.remove('menu-open');
-      toggle.innerHTML = '';
+      toggle.innerHTML = ''; // Clear X, will show hamburger via CSS
     };
     const openMenu = () => {
       nav.classList.add('open');
       toggle.setAttribute('aria-expanded', 'true');
       toggle.setAttribute('aria-label', 'Close menu');
       document.body.classList.add('menu-open');
-      toggle.innerHTML = '';
+      toggle.innerHTML = ''; // Clear hamburger, will show X via CSS
     };
-    
     toggle.addEventListener('click', () => {
-      nav.classList.contains('open') ? closeMenu() : openMenu();
+      const isOpen = nav.classList.contains('open');
+      isOpen ? closeMenu() : openMenu();
     });
-    
-    // Close when a link is clicked - use event delegation
-    nav.addEventListener('click', (e) => {
-      if (e.target.tagName === 'A') closeMenu();
-    });
-    
+    // Close when a link is clicked
+    nav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
     // Close on Escape
-    document.addEventListener('keydown', (e) => { 
-      if (e.key === 'Escape' && nav.classList.contains('open')) closeMenu(); 
-    }, true);
-    
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
     // Ensure correct state on resize
     const mq = window.matchMedia('(max-width: 700px)');
     const handleResize = () => {
@@ -47,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function(){
   const yearEl = document.getElementById('year');
   if(yearEl) yearEl.textContent = new Date().getFullYear();
 
-  // slideshow - optimized with cached selectors
+  // slideshow
   const slides = Array.from(document.querySelectorAll('.slideshow .slide'));
   if(slides.length){
     let idx = 0;
@@ -55,23 +48,16 @@ document.addEventListener('DOMContentLoaded', function(){
     const prevBtn = document.querySelector('.slide-prev');
     const dotsWrap = document.getElementById('slideDots');
     const slideshow = document.getElementById('slideshow');
-    const mq = window.matchMedia('(max-width: 700px)');
-    
-    let timer = null;
-    let desktopInitialized = false;
-    let dotButtons = null;
 
     function renderDots(){
       if(!dotsWrap) return;
       dotsWrap.innerHTML = '';
-      dotButtons = [];
       slides.forEach((s,i) => {
         const b = document.createElement('button');
         b.setAttribute('aria-label', 'Go to slide ' + (i+1));
-        if(i === idx) b.classList.add('active');
-        b.addEventListener('click', ()=> goTo(i));
+        b.className = i === idx ? 'active' : '';
+        b.addEventListener('click', ()=> { goTo(i); });
         dotsWrap.appendChild(b);
-        dotButtons.push(b);
       });
     }
 
@@ -79,9 +65,7 @@ document.addEventListener('DOMContentLoaded', function(){
       slides.forEach((s,i)=>{
         s.classList.toggle('active', i === idx);
       });
-      if (dotButtons) {
-        dotButtons.forEach((b,i)=> b.classList.toggle('active', i === idx));
-      }
+      if (dotsWrap) Array.from(dotsWrap.children).forEach((b,i)=> b.classList.toggle('active', i === idx));
     }
 
     function goTo(i){
@@ -89,35 +73,30 @@ document.addEventListener('DOMContentLoaded', function(){
       show();
     }
 
+    // Responsive behavior: disable sliding on mobile
+    const mq = window.matchMedia('(max-width: 700px)');
+    let timer = null;
+    let desktopInitialized = false;
+
     function setupDesktop(){
       if (desktopInitialized) return;
       desktopInitialized = true;
       if (dotsWrap) { dotsWrap.style.display = ''; }
       renderDots();
       show();
-      
       if(nextBtn) nextBtn.addEventListener('click', ()=> goTo(idx+1));
       if(prevBtn) prevBtn.addEventListener('click', ()=> goTo(idx-1));
-      
       timer = setInterval(()=> goTo(idx+1), 5000);
-      
-      const pauseSlideshow = () => { 
-        if (timer) { clearInterval(timer); timer = null; } 
-      };
-      const resumeSlideshow = () => { 
-        if (!timer) timer = setInterval(()=> goTo(idx+1), 5000); 
-      };
-      
-      slideshow.addEventListener('mouseenter', pauseSlideshow);
-      slideshow.addEventListener('mouseleave', resumeSlideshow);
+      slideshow.addEventListener('mouseenter', ()=> { if (timer) { clearInterval(timer); timer = null; } });
+      slideshow.addEventListener('mouseleave', ()=> { if (!timer) timer = setInterval(()=> goTo(idx+1), 5000); });
     }
 
     function setupMobile(){
       if (timer) { clearInterval(timer); timer = null; }
       if (dotsWrap) { dotsWrap.innerHTML = ''; dotsWrap.style.display = 'none'; }
-      idx = 0;
+      idx = 0; // ensure first slide
       show();
-      desktopInitialized = false;
+      desktopInitialized = false; // allow re-init when going back to desktop
     }
 
     const handleChange = (e) => {
