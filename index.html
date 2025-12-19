@@ -4,12 +4,16 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Hivecraft Studio</title>
+  <link rel="preload" as="image" href="assets/images/hero-1.jpg" />
+  <link rel="preload" as="image" href="assets/images/vaucluse-duplex/hero.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <a class="logo" href="#"><img src="assets/images/logo.png" alt="Hivecraft Studio" /></a>
+      <a class="logo" href="#"><img src="assets/images/logo.png" alt="Hivecraft Studio" width="100" height="100" /></a>
       <nav class="main-nav" aria-label="Main navigation">
         <ul>
           <li><a href="#home">Home</a></li>
@@ -27,12 +31,12 @@
   <!-- Hero / slideshow -->
   <section id="home" class="hero">
     <div class="slideshow" id="slideshow" aria-roledescription="carousel">
-      <div class="slide active" style="background-image:url('assets/images/hero-1.jpg')"></div>
-      <div class="slide" style="background-image:url('assets/images/hero-2.jpg')"></div>
-      <div class="slide" style="background-image:url('assets/images/hero-3.jpg')"></div>
-      <div class="slide" style="background-image:url('assets/images/hero-4.jpg')"></div>
-      <div class="slide" style="background-image:url('assets/images/hero-5.jpg')"></div>
-      <div class="slide" style="background-image:url('assets/images/hero-6.jpg')"></div>
+      <div class="slide active" style="background-image:url('assets/images/hero-1.jpg')" data-src="assets/images/hero-1.jpg"></div>
+      <div class="slide" style="background-image:url('assets/images/hero-2.jpg')" data-src="assets/images/hero-2.jpg"></div>
+      <div class="slide" style="background-image:url('assets/images/hero-3.jpg')" data-src="assets/images/hero-3.jpg"></div>
+      <div class="slide" style="background-image:url('assets/images/hero-4.jpg')" data-src="assets/images/hero-4.jpg"></div>
+      <div class="slide" style="background-image:url('assets/images/hero-5.jpg')" data-src="assets/images/hero-5.jpg"></div>
+      <div class="slide" style="background-image:url('assets/images/hero-6.jpg')" data-src="assets/images/hero-6.jpg"></div>
       <button class="slide-prev" aria-label="Previous slide">‹</button>
       <button class="slide-next" aria-label="Next slide">›</button>
       <div class="slide-dots" id="slideDots"></div>
@@ -53,27 +57,27 @@
     </div>
     <div class="grid">
       <figure class="project" data-project="vaucluse-duplex">
-        <img src="assets/images/vaucluse-duplex/hero.jpg" alt="Vaucluse Duplex" loading="lazy" />
+        <img src="assets/images/vaucluse-duplex/hero.jpg" alt="Vaucluse Duplex" loading="lazy" width="400" height="500" />
         <figcaption>Vaucluse Duplex</figcaption>
       </figure>
       <figure class="project" data-project="cronulla-house">
-        <img src="assets/images/cronulla-house/hero.jpg" alt="Cronulla House" loading="lazy" />
+        <img src="assets/images/cronulla-house/hero.jpg" alt="Cronulla House" loading="lazy" width="400" height="500" />
         <figcaption>Cronulla House</figcaption>
       </figure>
       <figure class="project" data-project="sylvania-waters-house">
-        <img src="assets/images/sylvania-waters-house/hero.jpg" alt="Sylvania Waters House" loading="lazy" />
+        <img src="assets/images/sylvania-waters-house/hero.jpg" alt="Sylvania Waters House" loading="lazy" width="400" height="500" />
         <figcaption>Sylvania Waters House</figcaption>
       </figure>
       <figure class="project" data-project="queensland-residence">
-        <img src="assets/images/queensland-residence/hero.jpg" alt="Queensland Residence" loading="lazy" />
+        <img src="assets/images/queensland-residence/hero.jpg" alt="Queensland Residence" loading="lazy" width="400" height="500" />
         <figcaption>Queensland Residence</figcaption>
       </figure>
       <figure class="project" data-project="modern-villa">
-        <img src="assets/images/modern-villa/hero.jpg" alt="Modern Villa" loading="lazy" />
+        <img src="assets/images/modern-villa/hero.jpg" alt="Modern Villa" loading="lazy" width="400" height="500" />
         <figcaption>Modern Villa</figcaption>
       </figure>
       <figure class="project" data-project="coastal-retreat">
-        <img src="assets/images/coastal-retreat/hero.jpg" alt="Coastal Retreat" loading="lazy" />
+        <img src="assets/images/coastal-retreat/hero.jpg" alt="Coastal Retreat" loading="lazy" width="400" height="500" />
         <figcaption>Coastal Retreat</figcaption>
       </figure>
     </div>
@@ -94,6 +98,6 @@
     </div>
   </footer>
 
-  <script src="assets/js/main.js"></script>
+  <script src="assets/js/main.js" defer></script>
 </body>
 </html>
